@@ -20,5 +20,7 @@ Contributors:
 
 
 Open issues/Bugs:
-Issues with sequencing in deletecity. After deleting a city from vertices, the adjacency vectors get all out of whack
-Make districtinfestation more dynamic, as of now it is hard-coded to accept a max of 5 districts
+
+-Issues with sequencing in deletecity. After deleting a city from vertices, the adjacency vectors get all out of whack
+
+-Make districtinfestation more dynamic, as of now it is hard-coded to accept a max of 5 districts
