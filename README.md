@@ -26,3 +26,5 @@ Open issues/Bugs:
 -Make districtinfestation more dynamic, as of now it is hard-coded to accept a max of 5 districts
 
 -Will sorting vertices work? Same problem as deleting vertices? Adjacent pointers stay pointing to same spot but things in those spots move/get deleted. Will changing vertices to vertex* work? Or are these operations impossible?
+
+-Add general error checking for user inputs
