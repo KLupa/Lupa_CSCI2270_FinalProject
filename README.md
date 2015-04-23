@@ -11,7 +11,7 @@ Dependencies:
 This program depends on the <vector>, <iostream>, <string>, <fstream>, <cmath>, and <cstring> c++ libraries.
 
 System Requirements:
-
+Program should work on any system.
 
 Group Members:
 Kristian Lupa
