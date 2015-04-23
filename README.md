@@ -21,10 +21,8 @@ Contributors:
 
 Open issues/Bugs:
 
--Issues with sequencing in deletecity. After deleting a city from vertices, the adjacency vectors get all out of whack and a very weird error occurs when print cities is called after deleting certain cities.
+-***Major issue with changing the order of the vertices vector in the delete and sort algorithms. Algorithms execute well, however adjacency vectors of vertices get thrown off. It seems members of the adj vector point to specific spots in the vertices array, so when it is changed the items at each pointer's location change, therefore the adj vector changes although it should not.
 
 -Make districtinfestation more dynamic, as of now it is hard-coded to accept a max of 5 districts
 
--Will sorting vertices work? Same problem as deleting vertices? Adjacent pointers stay pointing to same spot but things in those spots move/get deleted. Will changing vertices to vertex* work? Or are these operations impossible?
-
--Add general error checking for user inputs
+-Add general error checking on user inputs to avoid error.
