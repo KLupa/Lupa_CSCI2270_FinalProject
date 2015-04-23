@@ -45,7 +45,7 @@ class Graph
         int getsize();
     protected:
     private:
-        std::vector<vertex> vertices;
+        std::vector<vertex*> vertices;
 
 };
 

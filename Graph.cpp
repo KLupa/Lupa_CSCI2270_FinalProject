@@ -34,26 +34,26 @@ Postcondition: Input cities have their adjacency vectors updated to include each
 void Graph::addEdge(string v1, string v2, int weight){
     for(int i = 0; i < vertices.size(); i++){
         //find first city
-        if(vertices[i].name == v1){
+        if(vertices[i]->name == v1){
             for(int j = 0; j < vertices.size(); j++){
                 //find second city, ensure it isn't the same as the first
-                if(vertices[j].name == v2 && i != j){
-                    for(int k = 0; k < vertices[i].adj.size(); k++){
-                            vertex *x = vertices[i].adj[k].v;
-                        if(x->name == vertices[j].name){
+                if(vertices[j]->name == v2 && i != j){
+                    for(int k = 0; k < vertices[i]->adj.size(); k++){
+                            vertex *x = vertices[i]->adj[k].v;
+                        if(x->name == vertices[j]->name){
                             return;
                         }
                     }
                     //add adjacent vertec signifying edge
                     adjVertex av;
-                    av.v = &vertices[j];
+                    av.v = vertices[j];
                     av.weight = weight;
-                    vertices[i].adj.push_back(av);
+                    vertices[i]->adj.push_back(av);
                     //another vertex for edge in other direction
                     adjVertex av2;
-                    av2.v = &vertices[i];
+                    av2.v = vertices[i];
                     av2.weight = weight;
-                    vertices[j].adj.push_back(av2);
+                    vertices[j]->adj.push_back(av2);
                 }
             }
         }
@@ -79,17 +79,17 @@ void Graph::addVertex(string n){
     bool found = false;
     //check if it already exists
     for(int i = 0; i < vertices.size(); i++){
-        if(vertices[i].name == n){
+        if(vertices[i]->name == n){
             found = true;
-            cout<<vertices[i].name<<"Already in network"<<endl;
+            cout<<vertices[i]->name<<"Already in network"<<endl;
         }
     }
     if(found == false){
-        vertex v;
-        v.name = n;
-        v.ID = -1;
-        v.infestation = 0;
-        v.index = vertices.size();
+        vertex *v = new vertex;
+        v->name = n;
+        v->ID = -1;
+        v->infestation = 0;
+        v->index = vertices.size();
         vertices.push_back(v);
     }
 }
@@ -112,11 +112,11 @@ Postcondition: The graph is unchanged by this method.
 void Graph::displayEdges(){
     //loop through all vertices and adjacent vertices
     for(int i = 0; i < vertices.size(); i++){
-        cout<<vertices[i].ID<<":";
-        cout<<vertices[i].name<<"-->";
-        cout<<vertices[i].adj[0].v->name;
-        for(int j = 1; j < vertices[i].adj.size(); j++){
-            cout<<"***"<<vertices[i].adj[j].v->name;
+        cout<<vertices[i]->ID<<":";
+        cout<<vertices[i]->name<<"-->";
+        cout<<vertices[i]->adj[0].v->name;
+        for(int j = 1; j < vertices[i]->adj.size(); j++){
+            cout<<"***"<<vertices[i]->adj[j].v->name;
         }
         cout<<endl;
     }
@@ -141,23 +141,23 @@ Postcondition: Some, but not necessarily all, of the vertices will have updated 
 this newly created district
 */
 void Graph::assignDistrict(std::string startingCity, int district){
-    vertex s;
+    vertex *s;
     for(int i = 0; i<vertices.size(); i++){
             //set visited on all to false
-        if (vertices[i].name != startingCity){
-            vertices[i].visited = false;
+        if (vertices[i]->name != startingCity){
+            vertices[i]->visited = false;
         }
         else{
             //starting vertex
-            vertices[i].ID = district;
+            vertices[i]->ID = district;
             s = vertices[i];
         }
     }
-   s.visited = true;
+   s->visited = true;
    vertex Q[30];
    int head = 0;
    int tail = 0;
-    Q[tail] = s;
+    Q[tail] = *s;
     tail++;
     //Breadth-first traversal by queuing a vertex then all of its adjacents. Set all of their 'ID' to the input
    while (head != tail){
@@ -179,7 +179,7 @@ void Graph::assignDistrict(std::string startingCity, int district){
 //and return its index
 int Graph::findDistrectless(){
 for(int i = 0; i < vertices.size(); i++){
-    if(vertices[i].ID == -1){
+    if(vertices[i]->ID == -1){
         return i;
     }
 }
@@ -190,14 +190,14 @@ return -1;
 //Auxilary function to loop through the vertices vector and erase all districts by setting each vertex' ID to -1
 void Graph::resetdistricts(){
     for(int i = 0; i < vertices.size(); i++){
-        vertices[i].ID = -1;
+        vertices[i]->ID = -1;
     }
 }
 
 //Auxilary function that loops through the vertices vector and displays the name of each vertex and its district ID
 void Graph::displayDistricts(){
     for(int i = 0; i < vertices.size(); i++){
-        std::cout<<vertices[i].name<<" - "<<vertices[i].ID<<std::endl;
+        std::cout<<vertices[i]->name<<" - "<<vertices[i]->ID<<std::endl;
     }
 }
 
@@ -225,17 +225,17 @@ void Graph::shortestpath(string c1, string c2){
     vertex v1;
     vertex v2;
     for(int i = 0; i<vertices.size(); i++){
-        if (vertices[i].name != c1){
-            vertices[i].visited = false;
-            if (vertices[i].name == c2){
+        if (vertices[i]->name != c1){
+            vertices[i]->visited = false;
+            if (vertices[i]->name == c2){
                 //destination
-                v2 = vertices[i];
+                v2 = *vertices[i];
             }
         }
         else {
             //beginning
-            v1 = vertices[i];
-            vertices[i].visited = true;
+            v1 = *vertices[i];
+            vertices[i]->visited = true;
         }
         cities[i] = -1;
     }
@@ -289,7 +289,7 @@ void Graph::shortestpath(string c1, string c2){
     top--;
     while(top != -1){
         //dequeue the path and print
-        cout<<","<<vertices[S[top]].name;
+        cout<<","<<vertices[S[top]]->name;
         top--;
     }
     cout<<endl;
@@ -318,18 +318,18 @@ void Graph::shortestdistance(string starting, string destination){
     vertex *start;
     vertex *dest;
     for(int i = 0; i<vertices.size(); i++){
-        if (vertices[i].name != starting){
+        if (vertices[i]->name != starting){
             //set all visited to false and all distances to a huge number
-            vertices[i].visited = false;
-            vertices[i].distance = 1000000;
-            if (vertices[i].name == destination){
-                dest = &vertices[i];
+            vertices[i]->visited = false;
+            vertices[i]->distance = 1000000;
+            if (vertices[i]->name == destination){
+                dest = vertices[i];
             }
         }
         else {
-            vertices[i].visited = true;
-            vertices[i].distance = 0;
-            start = &vertices[i];
+            vertices[i]->visited = true;
+            vertices[i]->distance = 0;
+            start = vertices[i];
         }
     }
     //create a vector to keep track of solved vertices
@@ -407,8 +407,8 @@ Postcondition: All conditions remain the same except for the one vertex that had
 */
 void Graph::updateinfestation(std::string name, int level){
     for(int i = 0; i < vertices.size(); i++){
-        if(vertices[i].name == name){
-            vertices[i].infestation = level;
+        if(vertices[i]->name == name){
+            vertices[i]->infestation = level;
             return;
         }
     }
@@ -417,7 +417,7 @@ void Graph::updateinfestation(std::string name, int level){
 //Auxilary function that prints all cities in the vertices vector and their infestation attribute
 void Graph::checkinfestation(){
     for(int i = 0; i < vertices.size(); i++){
-        cout<<vertices[i].name<<" - "<<vertices[i].infestation<<"% infested"<<endl;
+        cout<<vertices[i]->name<<" - "<<vertices[i]->infestation<<"% infested"<<endl;
     }
 }
 
@@ -448,12 +448,12 @@ void Graph::districtinfestation(){
     }
     int districts = 0;
     for(int i = 0; i < vertices.size(); i++){
-        if(vertices[i].ID > districts){
+        if(vertices[i]->ID > districts){
             //keeps highest district ID (signifying total # of districts)
-            districts = vertices[i].ID;
+            districts = vertices[i]->ID;
         }
-        data[vertices[i].ID] += vertices[i].infestation;
-        sizes[vertices[i].ID]++;
+        data[vertices[i]->ID] += vertices[i]->infestation;
+        sizes[vertices[i]->ID]++;
     }
     double avg;
     int total;
@@ -491,17 +491,17 @@ void Graph::survival(std::string starting, std::string destination){
     vertex *start;
     vertex *dest;
     for(int i = 0; i < vertices.size(); i++){
-        if (vertices[i].name != starting){
-            vertices[i].visited = false;
-            vertices[i].distance = 1000000;
-            if (vertices[i].name == destination){
-                dest = &vertices[i];
+        if (vertices[i]->name != starting){
+            vertices[i]->visited = false;
+            vertices[i]->distance = 1000000;
+            if (vertices[i]->name == destination){
+                dest = vertices[i];
             }
         }
         else {
-            vertices[i].visited = true;
-            vertices[i].distance = 0;
-            start = &vertices[i];
+            vertices[i]->visited = true;
+            vertices[i]->distance = 0;
+            start = vertices[i];
         }
     }
 
@@ -552,7 +552,7 @@ void Graph::survival(std::string starting, std::string destination){
         temp = temp->previous;
     }
     top--;
-    cout<<"\nShortest Path"<<endl;
+    cout<<"\nPath"<<endl;
     while(top != 0){
         temp = printstack[top];
         cout<<temp->name<<" - ";
@@ -596,23 +596,23 @@ that was connected to it. Index attribute of most or all vertices changes to ref
 void Graph::deletecity(string cityname){
     //loop through each vertex' adj vector and delete if found
     for(int i = 0; i < vertices.size(); i++){
-        for(int j = 0; j < vertices[i].adj.size(); j++){
-            if(vertices[i].adj[j].v->name == cityname){
-                vertices[i].adj.erase(vertices[i].adj.begin() + j);
+        for(int j = 0; j < vertices[i]->adj.size(); j++){
+            if(vertices[i]->adj[j].v->name == cityname){
+                vertices[i]->adj.erase(vertices[i]->adj.begin() + j);
                 break;
             }
         }
     }
     //find and delete city from vertices
     for(int i = 0; i < vertices.size(); i++){
-        if(vertices[i].name == cityname){
+        if(vertices[i]->name == cityname){
             vertices.erase(vertices.begin() + i);
             break;
         }
     }
     //reset 'index' attribute for all vertices
     for(int k = 0; k < vertices.size(); k++){
-        vertices[k].index = k;
+        vertices[k]->index = k;
     }
 }
 
@@ -632,12 +632,12 @@ Precondition: Cities are stored in the vertices vector in any order.
 Postcondition: Cities are stored in the vertices vector in alphabetical order.
 */
 void Graph::alphabetize(){
-    vertex index;
+    vertex *index;
     for(int i = 0; i < vertices.size(); i++){
         index = vertices[i];
         int j = i;
         //move until in the right spot
-        while(j > 0 && strcmp(vertices[j-1].name.c_str(), index.name.c_str()) > 0){
+        while(j > 0 && strcmp(vertices[j-1]->name.c_str(), index->name.c_str()) > 0){
             vertices[j] = vertices[j - 1];
             j--;
         }
@@ -670,16 +670,16 @@ the same 'ID' are not necessarily listed in alphabetical order.
 void Graph::districtsort(int left, int right){
     int i = left;
     int j = right;
-    vertex temp;
+    vertex *temp;
     //set pivot to vertex halfway between the left and right index
-    int pivot = vertices[(left + right) / 2].ID;
+    int pivot = vertices[(left + right) / 2]->ID;
     while(i <= j){
         //find vertex on left side that it out of place
-        while(vertices[i].ID < pivot){
+        while(vertices[i]->ID < pivot){
             i++;
         }
         //find vertex on right side that it out of place
-        while(vertices[j].ID > pivot){
+        while(vertices[j]->ID > pivot){
             j--;
         }
         //if it isnt sorted yet
@@ -696,7 +696,7 @@ void Graph::districtsort(int left, int right){
     if(left < j){
         districtsort(left, j);
     }
-    //recursively call on the right subvector i not sorted yet
+    //recursively call on the right subvector if not sorted yet
     if(right > i){
         districtsort(i, right);
     }
