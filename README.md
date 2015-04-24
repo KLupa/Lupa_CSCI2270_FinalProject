@@ -8,10 +8,10 @@ How to Run:
 When the main.cpp driver file is run, it should read the zombieCities.txt file and build an intitial graph of the cities in the file. The user will then be shown a menu, and the program will wait for a response. The response should be a a number corresponding to the option desired from the menu. The program will continue to display the menu after each operation until the 'quit' option is selected, at which point the program will terminate. The user may select any option any number of times, but the program may break if the input does not match the prompt from the program.
 
 Dependencies:
-This program depends on the <vector>, <iostream>, <string>, <fstream>, <cmath>, and <cstring> c++ libraries.
+None
 
 System Requirements:
-Program should work on any system.
+None
 
 Group Members:
 Kristian Lupa
