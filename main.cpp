@@ -2,6 +2,7 @@
 #include <vector>
 #include "Graph.h"
 #include <fstream>
+#include <cstring>
 
 using namespace std;
 
@@ -171,30 +172,36 @@ int main(int argc, char *argv[])
                 g.resetdistricts();
                 int next = 0;
                 int district = 1;
-                /*while(next != -1){
-                    g.assignDistrict(cities[next], district);
-                    next = g.findDistrectless();
-                    district++;
-                }
-                g.displayDistricts();*/
             }
         }
         else if(choice == 7){
-            cout<<"Enter city to update infestation level for:"<<endl;
             string cityname;
+            bool found = false;
+            cout<<"Enter city to update infestation level for:"<<endl;
             getline (cin, cityname);
             getline (cin, cityname);
-            cout<<"Enter infestation level (0-100)"<<endl;
-            string infestation;
-            int level;
-            getline (cin, infestation);
-            level = stoi(infestation);
-            while(level < 0 || level > 100){
-                cout<<"Invalid entry. Please enter an infestation level between 0 and 100"<<endl;
+            for(int i = 0; i < cities.size(); i++){
+                if(cities[i] == cityname){
+                    found = true;
+                    break;
+                }
+            }
+            if(found == true){
+                cout<<"Enter infestation level (0-100)"<<endl;
+                string infestation;
+                int level;
                 getline (cin, infestation);
                 level = stoi(infestation);
+                while(level < 0 || level > 100){
+                    cout<<"Invalid entry. Please enter an infestation level between 0 and 100"<<endl;
+                    getline (cin, infestation);
+                    level = stoi(infestation);
+                }
+                g.updateinfestation(cityname, level);
             }
-            g.updateinfestation(cityname, level);
+            else{
+                cout<<"City not found"<<endl;
+            }
         }
         else if(choice == 8){
             if(g.findDistrectless() != -1){
@@ -224,6 +231,16 @@ int main(int argc, char *argv[])
         }
         else if (choice == 11){
             g.alphabetize();
+            string index;
+            for(int i = 0; i < cities.size(); i++){
+                index = cities[i];
+                int j = i;
+                while(j > 0 && strcmp(cities[j-1].c_str(), index.c_str()) > 0){
+                cities[j] = cities[j - 1];
+                j--;
+                }
+                cities[j] = index;
+            }
         }
         else if (choice == 12){
             if(g.findDistrectless() != -1){
