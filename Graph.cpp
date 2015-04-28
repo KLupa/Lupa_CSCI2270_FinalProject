@@ -240,11 +240,11 @@ void Graph::shortestpath(string c1, string c2){
         cities[i] = -1;
     }
     if(v1.name == "" || v2.name == ""){
-        cout<<"One or more cities doesn\'t exist"<<endl;
+        cout<<"One or more cities doesn't exist"<<endl;
         return;
     }
     if(v1.ID != v2.ID){
-        cout<<"No safe path between cities"<<endl;
+        cout<<"Cities not connected"<<endl;
         return;
     }
     vertex Q[15];
@@ -331,6 +331,14 @@ void Graph::shortestdistance(string starting, string destination){
             vertices[i]->distance = 0;
             start = vertices[i];
         }
+    }
+    if (start->name == "" || dest->name == ""){
+        cout<<"One or more cities not found"<<endl;
+        return;
+    }
+    if (start->ID != dest->ID){
+        cout<<"Cities not connected"<<endl;
+        return;
     }
     //create a vector to keep track of solved vertices
     vector<vertex*> solved;
@@ -505,7 +513,11 @@ void Graph::survival(std::string starting, std::string destination){
         }
     }
 
-    if(start->ID != dest->ID){
+    if (start->name == "" || dest->name == ""){
+        cout<<"One or more cities not found"<<endl;
+        return;
+    }
+    if (start->ID != dest->ID){
         cout<<"Cities not connected"<<endl;
         return;
     }
