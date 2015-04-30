@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int printmenu(){
+string printmenu(){
     cout<<"======Main Menu====="<<endl;
     cout<<"1. List cities and connections"<<endl;
     cout<<"2. Find districts"<<endl;
@@ -22,8 +22,8 @@ int printmenu(){
     cout<<"12. Organize cities by district"<<endl;
     cout<<"13. Quit"<<endl;
     string input;
-    cin>>input;
-    int choice = stoi(input);
+    string choice;
+    getline(cin,choice);
     return choice;
 }
 
@@ -67,13 +67,13 @@ int main(int argc, char *argv[])
         }
     }
 
-    int choice = 0;
-    while(choice != 13){
+    string choice = "";
+    while(choice != "13"){
         choice = printmenu();
-        if(choice == 1){
+        if(choice == "1"){
             g.displayEdges();
         }
-        else if(choice == 2){
+        else if(choice == "2"){
             int next = 0;
             int district = 1;
             while(next != -1){
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
             }
             g.displayDistricts();
         }
-        else if(choice == 3){
+        else if(choice == "3"){
             string first;
             cout<<"Enter a starting city:"<<endl;
             getline(cin, first);
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
                 g.shortestpath(first, second);
             }
         }
-        else if(choice == 4){
+        else if(choice == "4"){
             string first;
             string second;
             cout<<"Enter a starting city:"<<endl;
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
                 g.shortestdistance(first, second);
             }
         }
-        else if(choice == 5){
+        else if(choice == "5"){
             string cityname;
             cout<<"Enter city name:"<<endl;
             getline (cin, cityname);
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
                 g.displayDistricts();
             }
         }
-        else if(choice == 6){
+        else if(choice == "6"){
             string cityname;
             cout<<"Enter city name:"<<endl;
             getline (cin, cityname);
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
                 int district = 1;
             }
         }
-        else if(choice == 7){
+        else if(choice == "7"){
             string cityname;
             bool found = false;
             cout<<"Enter city to update infestation level for:"<<endl;
@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
                 cout<<"City not found"<<endl;
             }
         }
-        else if(choice == 8){
+        else if(choice == "8"){
             if(g.findDistrectless() != -1){
                 cout<<"Please identify the districts first"<<endl;
             }
@@ -211,10 +211,10 @@ int main(int argc, char *argv[])
                 g.districtinfestation();
             }
         }
-        else if(choice == 9){
+        else if(choice == "9"){
             g.checkinfestation();
         }
-        else if(choice == 10){
+        else if(choice == "10"){
             string first;
             string second;
             cout<<"Enter a starting city:"<<endl;
@@ -229,7 +229,7 @@ int main(int argc, char *argv[])
                 g.survival(first, second);
             }
         }
-        else if (choice == 11){
+        else if (choice == "11"){
             g.alphabetize();
             string index;
             for(int i = 0; i < cities.size(); i++){
@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
                 cities[j] = index;
             }
         }
-        else if (choice == 12){
+        else if (choice == "12"){
             if(g.findDistrectless() != -1){
                 cout<<"Please identify the districts first"<<endl;
             }
@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
                 g.districtsort(0, g.getsize() - 1);
             }
         }
-        else if(choice == 13){
+        else if(choice == "13"){
             cout<<"Goodbye!"<<endl;
         }
         else{
