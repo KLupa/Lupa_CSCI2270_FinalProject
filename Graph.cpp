@@ -463,8 +463,8 @@ void Graph::districtinfestation(){
         data[vertices[i]->ID] += vertices[i]->infestation;
         sizes[vertices[i]->ID]++;
     }
-    double avg;
-    int total;
+    double avg = 0;
+    int total = 0;
     //calculate average values and print
     for(int i = 1; i < districts + 1; i++){
         avg = data[i]/sizes[i];
