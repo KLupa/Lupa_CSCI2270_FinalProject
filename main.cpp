@@ -87,7 +87,6 @@ int main(int argc, char *argv[])
             string first;
             cout<<"Enter a starting city:"<<endl;
             getline(cin, first);
-            getline(cin, first);
             string second;
             cout<<"Enter an ending city:"<<endl;
             cin>>second;
@@ -103,7 +102,6 @@ int main(int argc, char *argv[])
             string second;
             cout<<"Enter a starting city:"<<endl;
             getline (cin, first);
-            getline (cin, first);
             cout<<"Enter an ending city:"<<endl;
             getline (cin, second);
             if(g.findDistrectless() != -1){
@@ -116,7 +114,6 @@ int main(int argc, char *argv[])
         else if(choice == "5"){
             string cityname;
             cout<<"Enter city name:"<<endl;
-            getline (cin, cityname);
             getline (cin, cityname);
             bool found = false;
             for(int i = 0; i < cities.size(); i++){
@@ -153,7 +150,6 @@ int main(int argc, char *argv[])
             string cityname;
             cout<<"Enter city name:"<<endl;
             getline (cin, cityname);
-            getline (cin, cityname);
             bool found = false;
             int deletehere = -1;
             for(int i = 0; i < cities.size(); i++){
@@ -178,7 +174,6 @@ int main(int argc, char *argv[])
             string cityname;
             bool found = false;
             cout<<"Enter city to update infestation level for:"<<endl;
-            getline (cin, cityname);
             getline (cin, cityname);
             for(int i = 0; i < cities.size(); i++){
                 if(cities[i] == cityname){
@@ -218,7 +213,6 @@ int main(int argc, char *argv[])
             string first;
             string second;
             cout<<"Enter a starting city:"<<endl;
-            getline (cin, first);
             getline (cin, first);
             cout<<"Enter an ending city:"<<endl;
             getline (cin, second);
